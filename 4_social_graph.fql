@@ -1,0 +1,32 @@
+Paginate(Match(Index("people_by_name"), "Alice"))
+
+
+Map(
+  Paginate(
+    Match(
+      Index("followers_by_followee"),
+      Select("ref", Get(Match(Index("people_by_name"), "Alice")))
+    )
+  ),
+  Lambda("person",
+    Select(["data", "name"], Get(Var("person")))
+  )
+)
+
+Map(
+  Paginate(
+    Intersection(
+      Match(
+        Index("followers_by_followee"),
+        Select("ref", Get(Match(Index("people_by_name"), "Alice")))
+      ),
+      Match(
+        Index("followers_by_followee"),
+        Select("ref", Get(Match(Index("people_by_name"), "Bob")))
+      )
+    )
+  ),
+  Lambda("person",
+    Select(["data", "name"], Get(Var("person")))
+  )
+)

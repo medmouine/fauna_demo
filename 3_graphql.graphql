@@ -1,0 +1,19 @@
+mutation CreateATodo {
+  createTodo(data: {
+      title: "Build an awesome app!"
+      completed: false
+    }) {
+    title
+    completed
+  }
+}
+
+query FindAllTodos {
+  allTodos {
+    data {
+      _id
+      title
+      completed
+    }
+  }
+}
